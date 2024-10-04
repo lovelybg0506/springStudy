@@ -32,7 +32,7 @@ class Friend {
 	String name;
 	int age;
 
-	Friend(String name, int age){ <- 이게 생성자
+	Friend(String name, int age){ // <- 이게 생성자
 		this.name = name;
 		this.age = age;
 	}
@@ -70,3 +70,42 @@ Load Gradle 버튼 click
         return "list.html";
     }
 
+[DB호스팅은 supabase 사용]
+[DB Tool은 DBeaver 사용]
+[DB는 PostgreSQL 사용]
+
+[build.gradle에 아래 2줄 추가]
+runtimeOnly 'org.postgresql:postgresql' // postgresql 접속 도와주는 라이브러리 (runtimeOnly라고 적으면 코드를 컴파일할 때는 필요없는 라이브러리니까 컴파일 할 땐 쓰지말라는 뜻)
+// 반대로 compileOnly 라고 적으면 컴파일할 때만 쓰라는 뜻(둘다 용량 절약 용도)
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // (Hibernate)ORM 라이브러리(Java코드로 데이터 입출력 가능)
+jpa : java의 ORM 표준문법
+hibernate : jpa의 구현체(JPA 쓰기좋게 구현한 것)
+
+[application.properties 설정]
+spring.datasource.url=jdbc:postgresql://서버주소/db명
+spring.datasource.username=supabase에서 준 user
+spring.datasource.password=supabase에서 설정한 password
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+spring.jpa.properties.hibernate.show_sql=true // JPA 문법 사용시 SQL을 따로 출력해줄지 에 대한 여부
+spring.jpa.hibernate.ddl-auto=update // 테이블 생성을 자동으로 할지에 대한 여부 (update = 변경사항만 반영 / none = 모든 변경사항 반영 X (배포시사용))
+
+[java>com.bgSPMall.shop>item.java file create]
+ORM에서는 class위에 @Entity를 붙이면 class명으로 테이블을 생성해줌(JPA 라이브러리)
+
+id컬럼에는 @Id 필수 (index)
+auto increament 기능 : @GeneratedValue(strategy = GenerationType.IdenTITY)
+
+[컬럼에는 어노테이션 @Column을 붙여서 제약조건 설정 가능]
+@Column(nullable = false,  unique = true, length=1000)
+
+[Lombok 설치 (코드 자동생성 라이브러리)]
+compileOnly 'org.projectlombok:lombok'
+annotationProcessor 'org.projectlombok:lombok'
+
+file - settings - annotationProcess check
+
+[JPA로 데이터 입출력]
+1. repository 만들기 (ItemRepository.java) <- interface
+2. class에 repository 등록
+3. repository.입출력문법() 사용

@@ -131,3 +131,25 @@ public : 다른 class에서도 사용 가능
 private : 다른 class에서 사용 불가능
 protected (=package-private) : 같은 폴더에서 사용 가능 (상속한 클래스는 사용가능)
 static : 객체를 만들지 않아도 사용가능
+
+[form data 전송시 Map 사용하면 모든 컬럼을 한번에 보낼 수 있음]
+@PostMapping("/addItem")
+    public String addItem(@RequestParam Map formData) {
+        System.out.println(formData);
+
+        return "redirect:/list"; // redirect
+    }
+
+Map 자료형 : {} 중괄호사용
+HashMap<String, Object> test = new HashMap<>(); // HashMap<key,value> ddd = new ~
+test.put("name","kang");    // key, value 사용
+test.put("age",20);
+
+[th:fragment] thymeleaf 문법 (nav.html)
+<div th:replace="~{nav.html::navbar}"></div> (write.html)
+div box를 nav.html에 있는 navbar 이름의 div로 덮어써라
+
+html로 변수나 데이터를 전송해줄 수도 있음
+th:replace="nav.html :: navbar('데이터1', '데이터2')"
+
+String detail(@PathVariable Integer id) {   // 유저가 URL파라미터에 입력한 값

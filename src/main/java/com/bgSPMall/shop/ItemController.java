@@ -21,8 +21,12 @@ public class ItemController {
 //        System.out.println("id : "+ result.get(1).id + " \n title : " + result.get(1).title + " \n price : " + result.get(1).price + "\n");
 //        System.out.println("id : "+ result.get(2).id + " \n title : " + result.get(2).title + " \n price : " + result.get(2).price + "\n");
 
-        model.addAttribute("title", result.get(0).title);
-        model.addAttribute("price", result.get(0).price);
+//        model.addAttribute("title", result.get(0).title);
+//        model.addAttribute("price", result.get(0).price);
+
+        model.addAttribute("items", result); // list.html에서 items라는 이름으로 데이터셋 사용하겠다
+
+//        System.out.println("데이터출력:"+result.toString());
 
         return "list.html";
     }

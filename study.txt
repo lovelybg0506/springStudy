@@ -109,3 +109,25 @@ file - settings - annotationProcess check
 1. repository 만들기 (ItemRepository.java) <- interface
 2. class에 repository 등록
 3. repository.입출력문법() 사용
+
+[main.css file은 resources > static 폴더안에 create]
+static폴더의 css파일 사용법 <head>태그 안에
+<link href="/main.css" rel="stylesheet">
+
+[html 반복문 th:each="변수명 : ${dataset}"]
+<div class="card" th:each="i : ${items}">
+    <img src="https://placehold.co/300">
+    <div>
+        <h4 th:text="${i.title}">상품명</h4>
+        <p th:text="${i.price}">가격</p>
+    </div>
+</div>
+
+[toString]
+class 위에 @ToString 작성 // toString 함수 사용가능(lombok 라이브러리)
+
+[access modifiers]
+public : 다른 class에서도 사용 가능
+private : 다른 class에서 사용 불가능
+protected (=package-private) : 같은 폴더에서 사용 가능 (상속한 클래스는 사용가능)
+static : 객체를 만들지 않아도 사용가능

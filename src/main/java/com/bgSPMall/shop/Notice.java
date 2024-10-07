@@ -12,7 +12,7 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
+    public String date;
     public String title;
 
-    public String date;
 }

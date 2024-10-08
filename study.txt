@@ -153,3 +153,4 @@ html로 변수나 데이터를 전송해줄 수도 있음
 th:replace="nav.html :: navbar('데이터1', '데이터2')"
 
 String detail(@PathVariable Integer id) {   // 유저가 URL파라미터에 입력한 값
+

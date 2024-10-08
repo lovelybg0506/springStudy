@@ -1,0 +1,30 @@
+
+// 파일명 : ExceptionHandler~.java  (Controller파일 저장해둔 곳에 class파일로 생성)
+
+package com.bgSPMall.shop;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+// 모든 Controller파일에서 에러가 나면 이곳에서 처리해줌 (REST API 쓸 때 주로 사용)
+@ControllerAdvice
+public class MyExceptionHandler {
+
+    // type 불일치 exception (ex : detail화면 요청시 숫자가 아닌 문자 입력한 경우)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<String> handler_typeMis() {
+
+        return ResponseEntity.status(404).body("MyExceptionHandler : TypeMis Error");
+    }
+
+    // 모든 excpetion처리
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handler() {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("MyExceptionHandler : Not Found Error");
+    }
+
+}

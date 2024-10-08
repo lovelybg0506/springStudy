@@ -21,7 +21,7 @@
                 <header class="major">
                     <h2>Product List</h2>
                 </header>
-                <div class="posts"> <!-- th:each="i : ${items}" -->
+                <div class="posts">
                     <article th:each="i : ${items}">
                         <a th:href="@{ '/detail/' + ${i.id} }" class="image"><img th:src="@{'/images/mine0' + ${i.id} + '.jpg' }" alt="" style="width:280px; height:420px;" /></a>
                         <h3 th:text="${i.title}">상품명</h3>
@@ -31,47 +31,6 @@
                             <li><a th:href="@{ '/detail/' + ${i.id} }" class="button">Detail</a></li>
                         </ul>
                     </article>
-
-<!--                    <article>-->
-<!--                        <a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>-->
-<!--                        <h3>Nulla amet dolore</h3>-->
-<!--                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
-<!--                        <ul class="actions">-->
-<!--                            <li><a href="#" class="button">More</a></li>-->
-<!--                        </ul>-->
-<!--                    </article>-->
-<!--                    <article>-->
-<!--                        <a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>-->
-<!--                        <h3>Tempus ullamcorper</h3>-->
-<!--                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
-<!--                        <ul class="actions">-->
-<!--                            <li><a href="#" class="button">More</a></li>-->
-<!--                        </ul>-->
-<!--                    </article>-->
-<!--                    <article>-->
-<!--                        <a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>-->
-<!--                        <h3>Sed etiam facilis</h3>-->
-<!--                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
-<!--                        <ul class="actions">-->
-<!--                            <li><a href="#" class="button">More</a></li>-->
-<!--                        </ul>-->
-<!--                    </article>-->
-<!--                    <article>-->
-<!--                        <a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>-->
-<!--                        <h3>Feugiat lorem aenean</h3>-->
-<!--                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
-<!--                        <ul class="actions">-->
-<!--                            <li><a href="#" class="button">More</a></li>-->
-<!--                        </ul>-->
-<!--                    </article>-->
-<!--                    <article>-->
-<!--                        <a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>-->
-<!--                        <h3>Amet varius aliquam</h3>-->
-<!--                        <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
-<!--                        <ul class="actions">-->
-<!--                            <li><a href="#" class="button">More</a></li>-->
-<!--                        </ul>-->
-<!--                    </article>-->
                 </div>
             </section>
 

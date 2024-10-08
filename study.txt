@@ -154,3 +154,36 @@ th:replace="nav.html :: navbar('데이터1', '데이터2')"
 
 String detail(@PathVariable Integer id) {   // 유저가 URL파라미터에 입력한 값
 
+[에러내역 기록하려면  logging 라이브러리]
+개발할 땐 그냥 System.out.println(e.getMessage()); 써서 콘솔에 출력
+
+[error]
+throw new Exception("에러발생시키기");
+위 문법은 try catch 안에서 사용 or throw Exception 사용
+
+Client Error : 4xx
+Server Error : 5xx
+정상 : 200
+
+[REST API 오류잡을때]
+return ResponseEntity.status(HttpStatus.NOT_FOUND).body("400Error남");
+
+REST API일 경우에는 try/catch / @ExceptionHandler
+REST API는 return "detail.html" 이런식으로 html파일을 보내주지 않고 데이터만 보내주기 때문에
+
+[데이터나 html을 보내는 역할 == Controller]
+[검사하거나 DB입출력 하는 것들 == 비즈니스로직]
+[비즈니스 로직 담는 클래스 == Service]
+
+[Dependency Injection] : new 키워드로 Object 만드는게 아니라 Autowired 사용하는것
+쓰는이유 : Object 여러개 안 뽑아도 됨(효율) ,class간 coupling 줄임
+
+Spring이 Object를 IoC Container에 넣어둠 그 Object들을 Bean이라고 부름
+
+
+1.ItemController.java 48Line 해결
+2.다른 Controller 함수들에 있던 코드들 html 보내주는 기능과 관련 없으면 서비스 레이어로 코드 옮겨서 사용
+3.wrtie.html 정리
+4.nav.html 삭제(+사용하는곳에서 코드삭제)
+5.notice.html 정리
+6.detail.html 정리

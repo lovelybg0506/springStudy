@@ -1,13 +1,10 @@
 package com.bgSPMall.shop;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -43,9 +40,9 @@ public class ItemController {
 //    public String addItem(@ModelAttribute Item item) { // 변수명item 이라는 Item객체에 form에서 넘어온 데이터를 넣어라
 
         String title = formData.get("title");
-        Integer price  = Integer.valueOf(formData.get("price"));
+        Integer price = Integer.valueOf(formData.get("price"));
 
-//        ItemService.saveItem(title, price);
+        itemService.saveItem(title, price);
 
         return "redirect:/list"; // redirect
     }

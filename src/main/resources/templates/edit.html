@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>writePage</title>
+    <base href="/" /> <!-- 상세페이지는 /detail/{id} 와 같은 하위 경로에서 접근할 것이라 절대경로 변경 -->
+    <title>editPage</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -19,24 +20,24 @@
             <!-- Section -->
             <section>
                 <header class="major">
-                    <h2>Product Registration</h2>
+                    <h2>Product Edit</h2>
                 </header>
 
-                <form method="post" action="/addItem">
+                <form method="post" action="/editItem">
                     <div class="row gtr-uniform">
+                        <input th:value="${detailData.id}" type="hidden" name="n_id">
                         <div class="col-10">
-                            <input type="text" name="n_title" id="i_title" value="" placeholder="Product Name" />
+                            <input th:value="${detailData.title}" type="text" name="n_title" id="i_title" value="" placeholder="Product Name" />
                         </div>
                         <div class="col-3">
-                            <input type="text" name="n_price" id="i_price" value="" placeholder="Price" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
+                            <input th:value="${detailData.price}" type="text" name="n_price" id="i_price" value="" placeholder="Price" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         </div>
                         <div class="col-10">
-                            <textarea name="n_description" id="i_description" placeholder="Enter product description" rows="6"></textarea>
+                            <textarea th:text="${detailData.description}" name="n_description" id="i_description" placeholder="Enter product description" rows="6"></textarea>
                         </div>
                         <div class="col-12">
                             <ul class="actions">
-                                <li><input type="submit" value="Register" class="primary" /></li>
-                                <li><input type="reset" value="Reset" /></li>
+                                <li><input type="submit" value="Modify" class="primary" /></li>
                             </ul>
                         </div>
                     </div>

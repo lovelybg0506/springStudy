@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class NoticeController {
 
     private final NoticeRepository noticeRepository;
+    private final NoticeService noticeService;
 
     @GetMapping("/notice")
     public String Notice(Model model) {
 
-        var result = noticeRepository.findAll();
-
-        model.addAttribute("notices", result);
+        noticeService.getNotice(model);
 
         return "notice.html";
     }

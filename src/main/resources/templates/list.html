@@ -24,7 +24,8 @@
                 <div class="posts">
                     <article th:each="i : ${items}">
                         <a th:href="@{ '/detail/' + ${i.id} }" class="image"><img th:src="@{'/images/mine0' + ${i.id} + '.jpg' }" alt="" style="width:280px; height:420px;" /></a>
-                        <h3 th:text="${i.title}">상품명</h3>
+                        <h3 th:text="${i.title}" style="display:inline;">상품명</h3>
+                        <a th:href="@{ '/edit/' + ${i.id} }" style="display:inline;">✏️</a>
                         <p th:text="${i.description}">상품설명</p>
                         <p th:text="'￦ ' + ${i.price}">가격</p>
                         <ul class="actions">

@@ -21,4 +21,9 @@ public class BasicController {
 
         return ZonedDateTime.now().toString();
     }
+
+    @GetMapping("/default")
+    public String defaultIndex() {
+        return "default_index.html";
+    }
 }

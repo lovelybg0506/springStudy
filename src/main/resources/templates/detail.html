@@ -1,25 +1,49 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="/main.css" rel="stylesheet">
+    <base href="/" /> <!-- 상세페이지는 /detail/{id} 와 같은 하위 경로에서 접근할 것이라 절대경로 변경 -->
+    <title>detailPage</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
-<body>
 
-    <!-- nav Bar Start -->
-    <div th:replace="~{nav.html::navbar}"></div>
-    <!-- nav Bar End -->
+<body class="is-preload">
 
-    <div class="detail">
-        <h4>상세페이지</h4>
-        <img src="https://placehold.co/300">
-        <h4 th:text="${detailData.title}">상품명</h4>
-        <p th:text="${detailData.price + '원'}">가격</p>
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+
+            <!-- Content -->
+            <section>
+                <header class="major">
+                    <h2>Product detail</h2>
+                </header>
+
+                <h2 th:text="${detailData.title}">상품명</h2>
+                <img th:src="@{'/images/mine0' + ${detailData.id} + '.jpg' }" alt="" style="width:280px; height:420px;" />
+                <h2 th:text="${'￦ ' + detailData.price}">가격</h2>
+                <p th:text="${detailData.description}">상품상세</p>
+
+            </section>
+
+        </div>
     </div>
+
+    <!-- sidebar -->
+    <div th:replace="~{sidebar.html::sidebar}"></div>
+
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
 
 </body>
 </html>

@@ -181,9 +181,11 @@ REST API는 return "detail.html" 이런식으로 html파일을 보내주지 않�
 Spring이 Object를 IoC Container에 넣어둠 그 Object들을 Bean이라고 부름
 
 
-1.ItemController.java 48Line 해결
-2.다른 Controller 함수들에 있던 코드들 html 보내주는 기능과 관련 없으면 서비스 레이어로 코드 옮겨서 사용
-3.wrtie.html 정리
-4.nav.html 삭제(+사용하는곳에서 코드삭제)
-5.notice.html 정리
-6.detail.html 정리
+[price처럼 숫자만 입력되야할 때 inputbox에 oninput속성 추가]
+oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+
+[input에는 th:value]
+
+[JPA수정 : .save 사용 예외]
+.save는 행추가인데 id값이 같으면 그 행을 수정함
+

@@ -21,8 +21,7 @@ public class ItemController {
     @GetMapping("/list")
     public String list(Model model) {
 
-        var result = itemRepository.findAll(); //테이블 안의 모든데이터를 List 자료형으로 가져옴
-        model.addAttribute("items", result); // list.html에서 items라는 이름으로 데이터셋 사용하겠다
+        itemService.getList(model);
 
         return "list.html";
     }
@@ -39,10 +38,11 @@ public class ItemController {
     public String addItem(@RequestParam Map<String, String> formData) {
 //    public String addItem(@ModelAttribute Item item) { // 변수명item 이라는 Item객체에 form에서 넘어온 데이터를 넣어라
 
-        String title = formData.get("title");
-        Integer price = Integer.valueOf(formData.get("price"));
+        String title = formData.get("n_title");
+        Integer price = Integer.valueOf(formData.get("n_price"));
+        String description = formData.get("n_description");
 
-        itemService.saveItem(title, price);
+        itemService.saveItem(title, price, description);
 
         return "redirect:/list"; // redirect
     }
@@ -61,5 +61,32 @@ public class ItemController {
         }
     }
 
+    // edit page
+    @GetMapping("/edit/{id}")
+    String edit(@PathVariable Long id, Model model) throws Exception {
+
+        Optional<Item> result = itemRepository.findById(id);
+
+        if (result.isPresent()) {   // Optional은 없는걸 쓰려고하면 에러나기 때문에 Optional 객체가 값을 가지고 있으면 실행 값이 없으면 넘어감
+            model.addAttribute("detailData", result.get());
+            return "edit.html";
+        } else {
+            return "redirect:/list";
+        }
+    }
+
+    // edit item
+    @PostMapping("/editItem")
+    public String editItem(@RequestParam Map<String, String> formData) {
+
+        Long id = Long.valueOf(formData.get("n_id"));
+        String title = formData.get("n_title");
+        Integer price = Integer.valueOf(formData.get("n_price"));
+        String description = formData.get("n_description");
+
+        itemService.editItem(id, title, price, description);
+
+        return "redirect:/list";
+    }
 
 }

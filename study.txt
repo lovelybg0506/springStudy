@@ -189,3 +189,35 @@ oninput="this.value = this.value.replace(/[^0-9]/g, '')"
 [JPA수정 : .save 사용 예외]
 .save는 행추가인데 id값이 같으면 그 행을 수정함
 
+[AJAX : 새로고침없이 서버로 요청하는 javascript코드]
+<script> // html파일 로드시 1회 실행 (one time run when this html file load)
+    // fetch('/url') // javascript 기본함수 url로 ajax를 이용해서 get요청을함
+
+        document.querySelectorAll('.button')[1].addEventListener('click', function(){
+            fetch('/test1', {
+                method : 'POST', // GET,POST,PUT,DELETE
+                headers : {'Content-Type' : 'application/json'},    // json data를 보낼것
+                body : JSON.stringify({name : 'kim'}) // array보낼땐 stringify 사용
+            })
+        })
+</script>
+
+[query string]
+document.querySelectorAll('.button1')[0].addEventListener('click', function() {
+        fetch('/test1?name=kim&key=value')
+    })
+
+
+[ajax사용시 return 값에 redirect 불가능]
+.then() : AJAX요청 완료시 코드 실행
+
+<span th:onclick="fetch('/deleteItem?id=[[${i.id}]]', {method : 'DELETE'})
+                           .then(r => r.text()) <!-- r.text : 서버에서 return 값이 String일 때, r.json : 서버에서 return값이 map or array일 때 -->
+                           .then((a) => {        <!-- callback함수 / a는 브라우저에서 보낸 값? -->
+                              console.log(a)
+                              location.reload(); <!-- 브라우저 새로고침 -->
+                           })
+                        ">❌</span>
+
+[URL parameter 쓰면 서버로 데이터전송 가능]
+@PathVariable String abc

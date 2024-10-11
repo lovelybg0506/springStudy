@@ -1,4 +1,4 @@
-package com.bgSPMall.shop;
+package com.bgSPMall.shop.item;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,6 +1,7 @@
-package com.bgSPMall.shop;
+package com.bgSPMall.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -87,6 +88,15 @@ public class ItemController {
         itemService.editItem(id, title, price, description);
 
         return "redirect:/list";
+    }
+
+    // /deleteItem으로 delete요청을 하면 실행되는 코드
+    @DeleteMapping("/deleteItem")
+    ResponseEntity<String> deleteItem(@RequestParam Long id) {
+
+        itemRepository.deleteById(id);
+
+        return ResponseEntity.status(200).body("삭제완료"); // ajax사용시 return 값에 redirect 불가능
     }
 
 }

@@ -26,12 +26,7 @@
                         <a th:href="@{ '/detail/' + ${i.id} }" class="image"><img th:src="@{'/images/mine0' + ${i.id} + '.jpg' }" alt="" style="width:280px; height:420px;" /></a>
                         <h3 th:text="${i.title}" style="display:inline;">상품명</h3>
                         <a th:href="@{ '/edit/' + ${i.id} }" style="display:inline;">✏️</a>
-                        <span th:onclick="fetch('/deleteItem?id=[[${i.id}]]', {method : 'DELETE'})
-                           .then(r => r.text())
-                           .then(() => {
-                              location.reload();
-                           })
-                        ">❌</span>
+                        <span th:onclick="'deleteItem(' + ${i.id} + ')'">❌</span>
 
                         <p th:text="${i.description}">상품설명</p>
                         <p th:text="'￦ ' + ${i.price}">가격</p>
@@ -51,6 +46,23 @@
 </div>
 
 <!-- Scripts -->
+<script>
+function deleteItem(id) {
+    if (confirm('삭제하시겠습니까?')) {
+        fetch('/deleteItem/' + id,{
+            method : 'DELETE'
+        })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                location.reload();
+            })
+            .catch(error => console.error('fn_deleteItem Error:', error));
+    }
+}
+
+</script>
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>

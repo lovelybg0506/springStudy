@@ -1,4 +1,4 @@
-package com.bgSPMall.shop;
+package com.bgSPMall.shop.Notice;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

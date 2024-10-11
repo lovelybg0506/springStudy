@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>writePage</title>
+    <title>Sign Up</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -19,24 +19,29 @@
             <!-- Section -->
             <section>
                 <header class="major">
-                    <h2>Product Write</h2>
+                    <h2>Sign Up</h2>
                 </header>
 
-                <form method="post" action="/addItem">
+                <form method="post" action="/member">
                     <div class="row gtr-uniform">
-                        <div class="col-10">
-                            <input type="text" name="n_title" id="i_title" value="" placeholder="Product Name" />
+                        <div class="col-6">
+                            <input type="text" name="n_userId" placeholder="ID" />
                         </div>
-                        <div class="col-3">
-                            <input type="text" name="n_price" id="i_price" value="" placeholder="Price" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
+                        <div class="col-6"></div>
+
+                        <div class="col-6">
+                            <input type="password" name="n_userPwd" placeholder="PASSWORD" />
                         </div>
-                        <div class="col-10">
-                            <textarea name="n_description" id="i_description" placeholder="Enter product description" rows="6"></textarea>
+                        <div class="col-6"></div>
+
+                        <div class="col-6">
+                            <input type="text" name="n_userName" placeholder="Name" />
                         </div>
+                        <div class="col-6"></div>
+
                         <div class="col-12">
                             <ul class="actions">
-                                <li><input type="submit" value="Write" class="primary" /></li>
-                                <li><input type="reset" value="Reset" /></li>
+                                <li><input type="submit" value="Sign up" class="primary" /></li>
                             </ul>
                         </div>
                     </div>

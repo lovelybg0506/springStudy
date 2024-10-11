@@ -1,7 +1,11 @@
 package com.bgSPMall.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -91,12 +95,28 @@ public class ItemController {
     }
 
     // /deleteItem으로 delete요청을 하면 실행되는 코드
-    @DeleteMapping("/deleteItem")
-    ResponseEntity<String> deleteItem(@RequestParam Long id) {
+    @DeleteMapping("/deleteItem/{id}")
+    @ResponseBody
+    ResponseEntity<String> deleteItem(@PathVariable Long id) {
 
-        itemRepository.deleteById(id);
+        try {
+            itemRepository.deleteById(id);
+            return ResponseEntity.ok("삭제완료");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제실패 : " + e.getMessage());
+        }
 
-        return ResponseEntity.status(200).body("삭제완료"); // ajax사용시 return 값에 redirect 불가능
+    }
+
+    // test
+    @GetMapping("/test2")
+    String deleteItem() {
+        var result = new BCryptPasswordEncoder().encode("문자~");
+
+        System.out.println(result);
+
+        return "redirect:/list";
+
     }
 
 }

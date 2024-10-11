@@ -221,3 +221,54 @@ document.querySelectorAll('.button1')[0].addEventListener('click', function() {
 
 [URL parameter 쓰면 서버로 데이터전송 가능]
 @PathVariable String abc
+
+[session 방식 / token 방식]
+session방식 = db사용
+token = db사용x
+
+[OAuth]
+social login : A사이트에서 쓰던 정보를 B사이트에서도 쓰는
+
+[Spring Security 사용해서 회원기능 구현]
+implementation 'org.springframework.boot:spring-boot-starter-security'
+implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+
+[SecurityConfig.java]
+FilterChain : 유저의 요청과 서버의 응답 사이에 자동으로 실행할 코드를 쓰는곳
+authorize.requestMatchers("/**").permitAll() // 특정페이지 로그인 검사 할지 결정
+.permitAll() : 항상 허용
+
+[hashing]
+salt
+
+[Bean]
+BCryptPasswordEncoder 같은 유저가 만든 라이브러리를 직접 수정하는건 비추,
+SecurityCofig.java 파일에서 한 것 처럼 Bean으로 만들어서 사용가능 (Dependency Injection)
+(class명 위에 @Configuration 붙여야함)
+@Bean
+PasswordEncoder fnName(){
+    return new BCryptPasswordEncoder();
+}
+이렇게 작성 했으면 Controller에서 등록 후 사용가능
+private final PasswordEncoder passwordEncoder;
+
+SpringSecurity 사용시 Login화면 만들 때
+input name 정해진걸로 맞춰야함 (username, password) + form action="/login"
+
+interface : class의 가이드라인
+
+
+[Derived query methods] (MemberRepository.java)
+- and, or 조건
+- 특정문자 포함되었는지 검색
+- 특정 숫자 이상/이하인 것 검색
+- 정렬 등
+interface ~Repository 함수 안에
+findBy컬럼명(파라미터); <- 컬럼명에 파라미터가 들어있는 행을 찾아오는 함수를 만들어줌
+ex) Optional<Member> findByUsername(String username);
++ ) findAllBy~ : 파라미터가 들어있는 모든행 찾음 (Optional이 아니라 List에 담기)
+
+
+[JPA는 기본적으로 camelCase로 작성된 Java 필드명을 데이터베이스의 snake_case로 자동변환시켜버림...]
+그래서 Entity에 userId 라고 작성했는데 DB에는 자꾸 user_id로 만들어진것...
+

@@ -1,4 +1,4 @@
-package com.bgSPMall.shop;
+package com.bgSPMall.shop.Notice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

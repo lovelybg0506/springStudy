@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <title>Sign In</title>
   <meta charset="utf-8" />
@@ -19,32 +19,21 @@
       <!-- Section -->
       <section>
         <header class="major">
-          <h2>Sign In</h2>
+          <h2>MyPage</h2>
         </header>
 
-        <div th:if="${param.error}"> <!-- url 파라미터중 error가 있으면 보여줌 -->
-          <h4>로그인 실패</h4>
+        <div sec:authentication="principal"></div> <!-- object자료, 유저정보 -->
+        <br>
+
+        <span sec:authentication="principal.username"></span>님 안녕하세요
+        <br>
+
+        <div sec:authorize="hasAuthority('NormalUser')">
+          <h4>일반유저일 때만 보임</h4>
         </div>
 
-        <form method="post" action="/login"> <!-- MyUserDetailsService.java로 감 -->
-          <div class="row gtr-uniform">
-            <div class="col-6">
-              <input type="text" name="username" placeholder="ID" />
-            </div>
-            <div class="col-6"></div>
-
-            <div class="col-6">
-              <input type="password" name="password" placeholder="PASSWORD" />
-            </div>
-            <div class="col-6"></div>
-
-            <div class="col-12">
-              <ul class="actions">
-                <li><input type="submit" value="Login" class="primary" /></li>
-              </ul>
-            </div>
-          </div>
-        </form>
+<!--        <div sec:authorize="isAuthenticated()">login user</div> &lt;!&ndash; 로그인한 사람만 html보여줌 &ndash;&gt;-->
+<!--        <div sec:authorize="isAnonymous()">logout user</div> &lt;!&ndash; 로그아웃한 사람만 html보여줌 &ndash;&gt;-->
 
       </section>
 

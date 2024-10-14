@@ -272,3 +272,20 @@ ex) Optional<Member> findByUsername(String username);
 [JPA는 기본적으로 camelCase로 작성된 Java 필드명을 데이터베이스의 snake_case로 자동변환시켜버림...]
 그래서 Entity에 userId 라고 작성했는데 DB에는 자꾸 user_id로 만들어진것...
 
+[권한 : MyUserDetailsService.java, MemberController.java]
+
+[sec:authentication] - mypage.html
+<div sec:authentication="principal"></div> <!-- 유저정보 -->
+<div sec:authentication="principal.username"></div> <!-- Object자료형이라 이렇게 쓸 수 있음 -->
+<div sec:authorize="hasAuthority('NormalUser')">
+  <h4>일반유저만 보임</h4>
+</div>
+<div sec:authorize="isAuthenticated()">login user</div> // 로그인한 사람한테만 보임
+<div sec:authorize="isAnonymous()">logout user</div> // 로그아웃한 사람한테만 보임
+
+API마다 로그인검사하는 어노테이션
+@PreAuthorize("isAuthenticated()") : 소괄호 안에 있는 함수가 참인 경우에만 아래의 API를 실행해줌
+- isAuthenticated()
+- isAnonymous()
+- hasAuthority('')
+

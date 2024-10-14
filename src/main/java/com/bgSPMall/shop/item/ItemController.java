@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -40,14 +42,21 @@ public class ItemController {
 
     // add item in database
     @PostMapping("/addItem")
-    public String addItem(@RequestParam Map<String, String> formData) {
+    public String addItem(@RequestParam Map<String, String> formData,  @AuthenticationPrincipal UserDetails userDetails) {
 //    public String addItem(@ModelAttribute Item item) { // 변수명item 이라는 Item객체에 form에서 넘어온 데이터를 넣어라
 
         String title = formData.get("n_title");
         Integer price = Integer.valueOf(formData.get("n_price"));
         String description = formData.get("n_description");
+        String RGTFLDUSR;
 
-        itemService.saveItem(title, price, description);
+        if (userDetails != null) {
+            RGTFLDUSR = userDetails.getUsername();
+        } else {
+            RGTFLDUSR = "unSignedUser";
+        }
+
+        itemService.saveItem(title, price, description, RGTFLDUSR);
 
         return "redirect:/list"; // redirect
     }
@@ -105,17 +114,6 @@ public class ItemController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제실패 : " + e.getMessage());
         }
-
-    }
-
-    // test
-    @GetMapping("/test2")
-    String deleteItem() {
-        var result = new BCryptPasswordEncoder().encode("문자~");
-
-        System.out.println(result);
-
-        return "redirect:/list";
 
     }
 

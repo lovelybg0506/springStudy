@@ -1,6 +1,11 @@
 package com.bgSPMall.shop.Member;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +22,13 @@ public class MemberController {
 
     // 회원가입 화면 이동
     @GetMapping("/register")
-    String register() {
+    String register(@AuthenticationPrincipal UserDetails userDetails) {
+
+        // 로그인한 유저가 회원가입버튼 누르면 list페이지로 이동시킴
+        if (userDetails != null) {
+            return "redirect:/list";
+        }
+
         return "register.html";
     }
 
@@ -52,5 +63,25 @@ public class MemberController {
 //        System.out.println(result.get().toString());    // Member.java class 위에 @ToString 작성해야 사용가능
 
         return "login.html";
+    }
+
+    // myPage
+    @PreAuthorize("isAuthenticated()") // 로그인한 유저만 API 실행
+    @GetMapping("/mypage")
+    String myPage(Authentication auth) {
+//        System.out.println(auth); // 유저토큰정보
+//        System.out.println(auth.getName()); // userId
+//        System.out.println(auth.isAuthenticated()); // 현재 로그인여부 : true or false
+
+        // Controller에서 현재유저의 권한 출력
+        System.out.println(auth.getAuthorities().contains(
+                new SimpleGrantedAuthority("NormalUser")
+        ));
+
+        if(auth.isAuthenticated() == true) {
+
+        }
+
+        return "mypage.html";
     }
 }

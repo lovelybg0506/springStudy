@@ -10,7 +10,7 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public void saveItem(String title, Integer price, String description) {
+    public void saveItem(String title, Integer price, String description, String RGTFLDUSR) {
 
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("제목을 입력해주세요.");
@@ -36,6 +36,7 @@ public class ItemService {
         item.setTitle(title);
         item.setPrice(price);
         item.setDescription(description);
+        item.setRGTFLDUSR(RGTFLDUSR);
 
         itemRepository.save(item);
     }

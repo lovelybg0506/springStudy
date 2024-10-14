@@ -26,6 +26,9 @@ public class Item {
     // 상품설명
     private String description;
 
+    // 등록자
+    private String RGTFLDUSR;
+
 //    public String toString(){
 //        return this.title + this.price;
 //    }

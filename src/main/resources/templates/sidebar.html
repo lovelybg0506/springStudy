@@ -1,16 +1,9 @@
-
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
 <div id="wrapper" th:fragment="sidebar">
 
   <!-- Sidebar -->
   <div id="sidebar">
     <div class="inner">
-
-      <!-- Search -->
-      <section id="search" class="alt">
-        <form method="post" action="#">
-          <input type="text" name="query" id="query" placeholder="Search" />
-        </form>
-      </section>
 
       <!-- Menu -->
       <nav id="menu">
@@ -18,9 +11,10 @@
           <h2>Menu</h2>
         </header>
         <ul>
-          <li><a href="/#">Homepage</a></li>
+          <li><a href="/#">Home</a></li>
 <!--          <li><a href="generic.html">Generic</a></li>-->
 <!--          <li><a href="elements.html">Elements</a></li>-->
+          <li sec:authorize="isAuthenticated()"><a href="/mypage">my page</a></li> <!-- 로그인한 유저만 보임 -->
           <li><a href="/list">Product List</a></li>
           <li><a href="/notice">Notice</a></li>
           <li>
@@ -32,7 +26,27 @@
               <li><a href="#">Feugiat Veroeros</a></li>
             </ul>
           </li>
+        </ul>
       </nav>
+
+      <!-- Section -->
+      <section>
+        <header class="main">
+            <h2>
+              <!-- login -->
+              <span sec:authorize="isAuthenticated()">Wellcome</span>
+              <span sec:authorize="isAuthenticated()" sec:authentication="principal.username"></span>
+
+              <!-- logout -->
+              <span sec:authorize="!isAuthenticated()">Sign here</span>
+            </h2>
+
+            <button class="button" onclick="location.href='/logout'" sec:authorize="isAuthenticated()">Logout</button>
+            <button onclick="location.href='/register'" sec:authorize="isAnonymous()">Sign Up</button>
+            <button onclick="location.href='/login'" sec:authorize="isAnonymous()">Sign In</button>
+        </header>
+
+      </section>
 
       <!-- Section -->
       <section>
@@ -55,3 +69,5 @@
 
     </div>
   </div>
+
+</div>

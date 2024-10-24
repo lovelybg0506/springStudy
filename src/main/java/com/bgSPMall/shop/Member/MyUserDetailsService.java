@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,12 +37,25 @@ public class MyUserDetailsService implements UserDetailsService {
 
         // 메모
         if (user.getUserId().equals("admin")) {
-            authorities.add(new SimpleGrantedAuthority("Admin")); // 아이디가 admin일 경우 Admin으로 메모
+            authorities.add(new SimpleGrantedAuthority("admin")); // 아이디가 admin일 경우 admin으로 메모
         } else {
-            authorities.add(new SimpleGrantedAuthority("NormalUser")); // 외 NormalUser 메모
+            authorities.add(new SimpleGrantedAuthority("normalUser")); // 외 normalUser 메모
         }
 
-        return new User(user.getUserId(), user.getUserPwd(), authorities);
+        // MemberController.java 의 myPage 함수의 파라미터로 전달되는 값 == userInfo
+        var userInfo =  new CustomUser(user.getUserId(), user.getUserPwd(), authorities);
+        userInfo.userName = user.getUserName();
+        return userInfo;
     }
 
+}
+
+// User 클래스를 상속받아서 커스텀해서 사용 (User클래스에서는 id,pwd,권한 정도밖에 쓸 수 없는데, 유저이름을 가져오고 싶어서)
+class CustomUser extends User {
+
+    public String userName; // 위 loadUserByUsername()함수에서 return값 넘길때 userInfo.userName값 추가해서 넘겨줌
+
+    public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, authorities);
+    }
 }

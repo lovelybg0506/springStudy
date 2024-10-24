@@ -22,14 +22,19 @@
           <h2>MyPage</h2>
         </header>
 
-        <div sec:authentication="principal"></div> <!-- object자료, 유저정보 -->
+        [유저정보]<div sec:authentication="principal"></div> <!-- object자료, 유저정보 -->
         <br>
 
-        <span sec:authentication="principal.username"></span>님 안녕하세요
+        <span sec:authentication="principal.username"></span>님 안녕하세요 (ID)
+        <span th:text="${userName}"></span>님 안녕하세요!(name)
         <br>
 
-        <div sec:authorize="hasAuthority('NormalUser')">
-          <h4>일반유저일 때만 보임</h4>
+        <div sec:authorize="hasAuthority('admin')">
+          <h4><span th:text="${userName}"></span>일 때만 보이는 글</h4>
+        </div>
+
+        <div sec:authorize="hasAuthority('normalUser')">
+          <h4>일반유저일 때만 보이는 글</h4>
         </div>
 
 <!--        <div sec:authorize="isAuthenticated()">login user</div> &lt;!&ndash; 로그인한 사람만 html보여줌 &ndash;&gt;-->

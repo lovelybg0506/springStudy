@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -68,20 +69,24 @@ public class MemberController {
     // myPage
     @PreAuthorize("isAuthenticated()") // 로그인한 유저만 API 실행
     @GetMapping("/mypage")
-    String myPage(Authentication auth) {
+    String myPage(@AuthenticationPrincipal CustomUser userInfo, Model model) {
 //        System.out.println(auth); // 유저토큰정보
 //        System.out.println(auth.getName()); // userId
 //        System.out.println(auth.isAuthenticated()); // 현재 로그인여부 : true or false
 
-        // Controller에서 현재유저의 권한 출력
-        System.out.println(auth.getAuthorities().contains(
-                new SimpleGrantedAuthority("NormalUser")
-        ));
+        // Controller에서 현재유저의 권한 출력가능
+//        System.out.println(auth.getAuthorities().contains(
+//                new SimpleGrantedAuthority("NormalUser")
+//        ));
 
-        if(auth.isAuthenticated() == true) {
+        //System.out.println(userInfo.userName);
+        model.addAttribute("userName", userInfo.userName);
 
+        if (userInfo == null) {
+            return "login.html";
+        } else {
+            return "mypage.html";
         }
 
-        return "mypage.html";
     }
 }

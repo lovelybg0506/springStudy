@@ -289,3 +289,7 @@ API마다 로그인검사하는 어노테이션
 - isAnonymous()
 - hasAuthority('')
 
+userDetails는 SpringSecurity에 기본 내재 되어있는 듯...
+수정해서 쓰려면 클래스 하나 만들어서 implements하면 될 듯?
+
+[spring-session-jdbc]

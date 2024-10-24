@@ -2,17 +2,14 @@ package com.bgSPMall.shop.Member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -87,6 +84,26 @@ public class MemberController {
         } else {
             return "mypage.html";
         }
+    }
 
+    @GetMapping("/user/1")
+    @ResponseBody
+    public MemberDto getUser() {
+        var a = memberRepository.findById(1L);
+        var result = a.get();
+        var data = new MemberDto(result.getUserId(), result.getUserName());
+
+        return data;
+    }
+}
+
+// Data Transfer Object (DTO) : 데이터 변환용 클래스
+class MemberDto {
+    public String userId;
+    public String userName;
+
+    MemberDto(String id, String name){ // constructor (new memberDto() 할 때 실행됨)
+        this.userId = id;
+        this.userName = name;
     }
 }

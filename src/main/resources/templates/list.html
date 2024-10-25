@@ -4,7 +4,8 @@
     <title>listPage</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+<!--    <link rel="stylesheet" th:href="@{/assets/css/main.css}">-->
 </head>
 
 <body class="is-preload">
@@ -37,7 +38,56 @@
                 </div>
             </section>
 
+            <!-- 페이징처리 -->
+            <div>
+                <ul class="pagination" align="center">
+                    <li>
+                        <a th:if="${currentPage > 1}" th:href="@{/list/page/{pageNum}(pageNum=${currentPage - 1})}" class="button">Prev</a>
+                        <span th:if="${currentPage == 1}" class="button disabled">Prev</span>
+                    </li>
+
+                    <!-- First Page -->
+                    <li th:if="${totalPages > 0}">
+                        <a th:href="@{/list/page/1}" th:classappend="${currentPage == 1} ? 'active'" class="page">1</a>
+                    </li>
+
+                    <!-- Left Ellipsis -->
+                    <li th:if="${currentPage > 3}">
+                        <span>&hellip;</span>
+                    </li>
+
+                    <!-- Page Numbers Around Current Page -->
+                    <li th:each="pageNum : ${#numbers.sequence(currentPage - 1, currentPage + 1)}"
+                        th:if="${pageNum > 1 and pageNum < totalPages}">
+                        <a th:href="@{/list/page/{pageNum}(pageNum=${pageNum})}"
+                           th:classappend="${pageNum == currentPage} ? 'active'"
+                           class="page"
+                           th:text="${pageNum}"></a>
+                    </li>
+
+                    <!-- Right Ellipsis -->
+                    <li th:if="${currentPage < totalPages - 2}">
+                        <span>&hellip;</span>
+                    </li>
+
+                    <!-- Last Page -->
+                    <li th:if="${totalPages > 1}">
+                        <a th:href="@{/list/page/{pageNum}(pageNum=${totalPages})}"
+                           th:classappend="${currentPage == totalPages} ? 'active'"
+                           class="page"
+                           th:text="${totalPages}"></a>
+                    </li>
+
+                    <li>
+                        <a th:if="${currentPage < totalPages}" th:href="@{/list/page/{pageNum}(pageNum=${currentPage + 1})}" class="button">Next</a>
+                        <span th:if="${currentPage == totalPages}" class="button disabled">Next</span>
+                    </li>
+                </ul>
+            </div>
+
         </div>
+
+
     </div>
 
     <!-- sidebar -->

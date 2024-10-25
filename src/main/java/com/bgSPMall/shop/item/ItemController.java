@@ -1,6 +1,8 @@
 package com.bgSPMall.shop.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ItemController {
 
+    // DI (Dependency Injection)
     // item Table 가져오기
     private final ItemRepository itemRepository;  // 원하는 class에 repository 등록 (@RequiredArgsConstructor 사용해야함(lombok))
     private final ItemService itemService;  // new ItemService가 들어있음
+    private final S3Service s3Service;
 
     // item list
     @GetMapping("/list")
@@ -30,7 +34,7 @@ public class ItemController {
 
         itemService.getList(model);
 
-        return "list.html";
+        return "redirect:/list/page/1";
     }
 
     // write document
@@ -115,6 +119,38 @@ public class ItemController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제실패 : " + e.getMessage());
         }
 
+    }
+
+    // page
+    @GetMapping("/list/page/{pageNum}")
+    String getListPage(Model model, @PathVariable(required = false) Integer pageNum) {
+
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(pageNum-1,4)); // pageNum, 페이지당 2개
+
+        int totalPages = (result != null && result.getTotalElements() > 0) ? result.getTotalPages() : 0;
+//        result.getTotalPages(); // 전체페이지 수
+//        result.hasNext(); // 다음페이지가 있는지
+
+        if (pageNum == null)
+            pageNum = 1;
+
+        model.addAttribute("items", result);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", pageNum);
+
+        return "list.html";
+    }
+
+    // image upload
+    @GetMapping("/presigned-url")
+    @ResponseBody
+    String getURL(@RequestParam String filename) {
+
+//        System.out.println(filename);
+        var result = s3Service.createPresignedUrl("test/" + filename);
+//        System.out.println(result);
+
+        return result;
     }
 
 }

@@ -293,3 +293,13 @@ userDetails는 SpringSecurity에 기본 내재 되어있는 듯...
 수정해서 쓰려면 클래스 하나 만들어서 implements하면 될 듯?
 
 [spring-session-jdbc]
+
+[pagination]
+
+[s3 - Presigned URL]
+유저가 이미지 올릴 때 서버에는 허락만 받고 유저가 바로 S3에 이미지업로드 하는 방식
+
+1.글 쓸때 이미지 선택하면 미리보기 보여주기
+2.선택하면 s3에 올리는게 아니라 저장하면 올리기
+3.저장할때 item table에 박기
+4.list나 상세페이지에서 이미지 보여줄때 item 테이블에서 이미지경로로 꺼내서 보여주기

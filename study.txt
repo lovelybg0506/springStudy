@@ -294,15 +294,6 @@ userDetails는 SpringSecurity에 기본 내재 되어있는 듯...
 
 [spring-session-jdbc]
 
-[Data Transfer Object (DTO)] : 데이터변환용 클래스
-object를 변환해서 전송하려면 Map 또는 DTO클래스 사용
-(MemberController.java - MemberDto 참조)
-1. class만들기
-2. 변수선언
-3. Dto만들기 (안에 this.사용해서 변수로 들어온값 세팅)
-4. 객체생성할때 바로 파라미터에 값 담아서 사용가능
-(더 쉽게쓰려면 MapStruct 검색)
-
 [pagination]
 
 [s3 - Presigned URL]

@@ -30,6 +30,35 @@
 
             </section>
 
+            <!-- Comments Section -->
+            <section>
+                <h3>Comments</h3>
+                <div th:if="${comments.isEmpty()}">
+                    <p>No comments yet.</p>
+                </div>
+                <div th:each="comment : ${comments}">
+                    <div class="comment">
+                        <p>
+                            <strong th:text="${comment.username}">user Name</strong>:
+                            <span th:text="${comment.content}">Comment content</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- comment add -->
+            <section>
+                <form method="post" action="/comment">
+                    <div class="row gtr-uniform">
+                        <div class="col-6 col-12-xsmall" style="display: inline-flex">
+                            <input type="text" name="content" value="" placeholder="comment" />
+                            <input name="parent" th:value="${detailData.id}" hidden>
+                            <input style="margin-left: 10px" type="submit" value="POST" class="primary" />
+                        </div>
+                    </div>
+                </form>
+            </section>
+
         </div>
     </div>
 

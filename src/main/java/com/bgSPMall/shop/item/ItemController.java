@@ -1,5 +1,7 @@
 package com.bgSPMall.shop.item;
 
+import com.bgSPMall.shop.comment.Comment;
+import com.bgSPMall.shop.comment.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,6 +30,7 @@ public class ItemController {
     private final ItemRepository itemRepository;  // 원하는 class에 repository 등록 (@RequiredArgsConstructor 사용해야함(lombok))
     private final ItemService itemService;  // new ItemService가 들어있음
     private final S3Service s3Service;
+    private final CommentRepository commentRepository;
 
     // item list
     @GetMapping("/list")
@@ -68,11 +72,14 @@ public class ItemController {
     @GetMapping("/detail/{id}")
     String detail(@PathVariable Long id, Model model) throws Exception {   // 유저가 URL파라미터에 입력한 값
 
+        List<Comment> res = commentRepository.findAllByParentId(id); // 댓글
+
         // Optional : 비어있을 수도 있고 Item 일 수도 있기 때문에 사용
         Optional<Item> result = itemRepository.findById(id);
 
         if (result.isPresent()) {   // Optional은 없는걸 쓰려고하면 에러나기 때문에 Optional 객체가 값을 가지고 있으면 실행 값이 없으면 넘어감
             model.addAttribute("detailData", result.get());
+            model.addAttribute("comments", res);
             return "detail.html";
         } else {
             return "redirect:/list";

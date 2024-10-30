@@ -10,7 +10,11 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    public void saveItem(String title, Integer price, String description, String RGTFLDUSR) {
+    public void saveItem(String title,
+                         Integer price,
+                         String description,
+                         String RGTFLDUSR,
+                         String imgPath) {
 
         if (title == null || title.isEmpty()) {
             throw new IllegalArgumentException("제목을 입력해주세요.");
@@ -37,6 +41,7 @@ public class ItemService {
         item.setPrice(price);
         item.setDescription(description);
         item.setRGTFLDUSR(RGTFLDUSR);
+        item.setImgPath(imgPath);
 
         itemRepository.save(item);
     }

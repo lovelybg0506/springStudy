@@ -57,6 +57,7 @@ public class ItemController {
         Integer price = Integer.valueOf(formData.get("n_price"));
         String description = formData.get("n_description");
         String RGTFLDUSR;
+        String imgPath = formData.get("imageUrl");
 
         if (userDetails != null) {
             RGTFLDUSR = userDetails.getUsername();
@@ -64,7 +65,7 @@ public class ItemController {
             RGTFLDUSR = "unSignedUser";
         }
 
-        itemService.saveItem(title, price, description, RGTFLDUSR);
+        itemService.saveItem(title, price, description, RGTFLDUSR, imgPath);
 
         return "redirect:/list"; // redirect
     }

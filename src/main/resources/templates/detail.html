@@ -24,7 +24,7 @@
                 </header>
 
                 <h2 th:text="${detailData.title}">상품명</h2>
-                <img th:src="@{'/images/mine0' + ${detailData.id} + '.jpg' }" alt="" style="width:280px; height:420px;" />
+                <img th:src="${detailData.imgPath}" alt="" style="width:280px; height:420px;" />
                 <h2 th:text="${'￦ ' + detailData.price}">가격</h2>
                 <p th:text="${detailData.description}">상품상세</p>
 
@@ -48,7 +48,7 @@
 
             <!-- comment add -->
             <section>
-                <form method="post" action="/comment">
+                <form th:action="@{/comment}" method="post" id="commentForm">
                     <div class="row gtr-uniform">
                         <div class="col-6 col-12-xsmall" style="display: inline-flex">
                             <input type="text" name="content" value="" placeholder="comment" />
@@ -73,6 +73,25 @@
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
+
+<script th:inline="javascript">
+    document.getElementById('commentForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // 폼 제출을 일시 중지
+
+        // 서버에서 Thymeleaf를 사용하여 로그인 상태를 전달
+        var isLoggedIn = /*[[${#authorization.expression('isAuthenticated()')}]]*/ false; // Thymeleaf가 서버 측에서 페이지를 처리할 때, /*[[...]]*/ 내부의 표현식을 평가하고 false를 대체함
+
+        if (!isLoggedIn) {
+            if(confirm('댓글을 작성하려면 로그인이 필요합니다. 로그인 하시겠습니까?')){
+                window.location.href = '/login';
+            }
+
+        } else {
+            // 로그인 상태라면 폼을 제출
+            this.submit();
+        }
+    });
+</script>
 
 </body>
 </html>

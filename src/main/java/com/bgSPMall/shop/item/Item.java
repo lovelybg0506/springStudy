@@ -29,6 +29,9 @@ public class Item {
     // 등록자
     private String RGTFLDUSR;
 
+    // 이미지경로(S3)
+    private String imgPath;
+
 //    public String toString(){
 //        return this.title + this.price;
 //    }

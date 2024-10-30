@@ -316,3 +316,9 @@ java -jar 생성된jar파일.jar 입력하면 서버띄우기 끝
 서버 : Comment테이블에 댓글 저장
 상세페이지에서 댓글 뽑아서 보여주기
 
+[docker]
+루트경로에 Dockerfile 생성
+FROM openjdk:17 // 자바버전
+ARG JAR_FILE=build/libs/shop-0.0.1-SNAPSHOT.jar // ARG : 변수선언
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]

@@ -20,10 +20,6 @@ public class CommentController {
                        @RequestParam Long parent,
                        Authentication auth)  {
 
-//        if (auth == null) {
-//            return "redirect:/login";
-//        }
-
         CustomUser user = (CustomUser) auth.getPrincipal();
 
         var data = new Comment();

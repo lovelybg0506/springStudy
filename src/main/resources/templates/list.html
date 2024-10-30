@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <base href="/"> <!-- main.js 등 불러올 때 오류때문에 추가 (모든 상대경로를 사이트의 루트를 기준으로 해석해줌) (+ list페이지 열 때, page/{num} 이런식으로 동적페이지를 호출해서 경로 에러가 났던 것 같음 -->
     <title>listPage</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -113,6 +114,11 @@ function deleteItem(id) {
 
 </script>
 
+<!--<script src="http://localhost:5000/assets/js/jquery.min.js"></script>
+<script src="http://localhost:5000/assets/js/browser.min.js"></script>
+<script src="http://localhost:5000/assets/js/breakpoints.min.js"></script>
+<script src="http://localhost:5000/assets/js/util.js"></script>
+<script src="http://localhost:5000/assets/js/main.js"></script>-->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/browser.min.js"></script>
 <script src="assets/js/breakpoints.min.js"></script>

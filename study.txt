@@ -317,8 +317,19 @@ java -jar 생성된jar파일.jar 입력하면 서버띄우기 끝
 상세페이지에서 댓글 뽑아서 보여주기
 
 [docker]
-루트경로에 Dockerfile 생성
+1. ./gradlew bootJar 로 jar파일생성
+2.루트경로에 Dockerfile 생성
 FROM openjdk:17 // 자바버전
 ARG JAR_FILE=build/libs/shop-0.0.1-SNAPSHOT.jar // ARG : 변수선언
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
+3. docker buildx build -t 태그(springapp:latest)
+4. docker save -o springapp.tar springapp:latest
+5. casaos를 이용해 ubuntu서버에 올려서 파일 경로 접근
+6. docker load -i springapp.tar
+7. docker images 이미지확인
+8. docker run -d -p 5000:5000 springapp:latest
+
+[하다가 알게된 것]
+302 리다이렉션 처리:
+서버에서 302 상태 코드를 반환하면, 브라우저가 자동으로 리다이렉션을 처리하여 .then 블록이 실행되지 않을 수 있다

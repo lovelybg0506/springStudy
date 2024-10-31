@@ -21,8 +21,14 @@
             <!-- Section -->
             <section>
                 <header class="major">
-                    <h2>Product List</h2>
+                    <div style="display:flex; justify-content: space-between; align-items: center;">
+                        <h2>Product List</h2>
+                        <form method="post" action="/search">
+                            <input type="text" name="query" id="query" placeholder="Search" style="display: inline-block"/>
+                        </form>
+                    </div>
                 </header>
+
                 <div class="posts">
                     <article th:each="i : ${items}">
                         <a th:href="@{ '/detail/' + ${i.id} }" class="image"><img th:src="${i.imgPath}" alt="" style="width:280px; height:420px;" /></a>

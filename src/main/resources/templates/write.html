@@ -105,12 +105,11 @@
         // 서버로 폼 데이터 전송
         fetch('/addItem', {
             method: 'POST',
-            body: formData
+            body: formData ,
+            redirect : 'manual' // 리다이렉션을 수동으로 처리 (302 status가 나오면 .then을 실행하지 않기때문에)
         }).then(response => {
-
-            alert(response.status);
-
-            if (response.ok || response.status === 302) {
+            // alert(response.status); //  왜인지는 모르겠는데 status에 302라고 나올때 출력해보면 0이 찍힘
+            if (response.ok || response.status === 302 || response.status === 0) {
                 alert('Product added successfully');
                 window.location.href = '/'; // 메인 페이지로 리다이렉트
             } else {

@@ -133,7 +133,7 @@ public class ItemController {
     @GetMapping("/list/page/{pageNum}")
     String getListPage(Model model, @PathVariable(required = false) Integer pageNum) {
 
-        Page<Item> result = itemRepository.findPageBy(PageRequest.of(pageNum-1,4)); // pageNum, 페이지당 2개
+        Page<Item> result = itemRepository.findPageBy(PageRequest.of(pageNum-1,4)); // pageNum, 페이지당 4개
 
         int totalPages = (result != null && result.getTotalElements() > 0) ? result.getTotalPages() : 0;
 //        result.getTotalPages(); // 전체페이지 수
@@ -161,15 +161,49 @@ public class ItemController {
         return result;
     }
 
+//    @PostMapping("/search")
+//    String postSearch(@RequestParam String searchText, Model model){
+//
+//        List<Item> result = itemRepository.fullTextSearch(searchText);
+//        System.out.println(result);
+//
+//        model.addAttribute("items", result);
+////        model.addAttribute("totalPages", totalPages);
+////        model.addAttribute("currentPage", pageNum);
+//
+//
+//        return "list.html";
+//    }
+
     @PostMapping("/search")
-    String postSearch(@RequestParam String searchText){
-
-        var result = itemRepository.rawQuery1();
-        System.out.println(result);
-
-        return "redirect:/list";
+    public String postSearch(@RequestParam String searchText, Model model) {
+        return searchWithPagination(searchText, 1, model);  // 첫 페이지로 리다이렉트
     }
 
+    @GetMapping({"/search"})
+    public String searchWithPagination(@RequestParam String searchText,
+                                       @RequestParam(defaultValue = "1") int pageNum,
+                                       Model model) {
+        int pageSize = 4;  // 페이지당 아이템 수
+        Page<Item> result = itemRepository.fullTextSearchWithPagination(searchText,PageRequest.of(pageNum-1, pageSize));
 
+        if (searchText != null && !searchText.isEmpty()) {
+            result = itemRepository.fullTextSearchWithPagination(searchText, PageRequest.of(pageNum-1, pageSize));
+        } else {
+            result = itemRepository.findAll(PageRequest.of(pageNum-1, pageSize));
+        }
+
+        int totalPages = (result != null && result.getTotalElements() > 0) ? result.getTotalPages() : 0;
+
+        // 페이지 번호가 총 페이지 수보다 크면 마지막 페이지로 설정
+        pageNum = Math.min(pageNum, totalPages);
+
+        model.addAttribute("items", result);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("searchText", searchText);  // 검색어를 모델에 추가
+
+        return "list.html";
+    }
 
 }

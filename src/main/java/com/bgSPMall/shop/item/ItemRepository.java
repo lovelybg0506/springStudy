@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -16,9 +17,13 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 //    Item rawQuery1(String searchText);
 
 
-    @Query(value = "SELECT * FROM shop.item WHERE to_tsvector('korean', title) @@ to_tsquery('korean', ?1)", nativeQuery = true)
+    @Query(value = "SELECT * FROM item WHERE to_tsvector('english', title) @@ to_tsquery('english', ?1)", nativeQuery = true)
     List<Item> fullTextSearch(String searchText);
 
-    // 메서드 호출
-    List<Item> results = itemRepository.fullTextSearch("셔츠");
+
+    @Query(value = "SELECT * FROM item WHERE to_tsvector('simple', title) @@ to_tsquery('simple', :searchText)",
+            countQuery = "SELECT count(*) FROM item WHERE to_tsvector('simple', title) @@ to_tsquery('simple', :searchText)",
+            nativeQuery = true)
+    Page<Item> fullTextSearchWithPagination(@Param("searchText") String searchText, Pageable pageable);
+
 }

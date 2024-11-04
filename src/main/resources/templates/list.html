@@ -50,13 +50,16 @@
             <div>
                 <ul class="pagination" align="center">
                     <li>
-                        <a th:if="${currentPage > 1}" th:href="@{/list/page/{pageNum}(pageNum=${currentPage - 1})}" class="button">Prev</a>
+                        <a th:if="${currentPage > 1}"
+                           th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${currentPage - 1})}"
+                           class="button">Prev</a>
                         <span th:if="${currentPage == 1}" class="button disabled">Prev</span>
                     </li>
 
                     <!-- First Page -->
                     <li th:if="${totalPages > 0}">
-                        <a th:href="@{/list/page/1}" th:classappend="${currentPage == 1} ? 'active'" class="page">1</a>
+                        <a th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=1)}"
+                           th:classappend="${currentPage == 1} ? 'active'" class="page">1</a>
                     </li>
 
                     <!-- Left Ellipsis -->
@@ -80,15 +83,17 @@
 
                     <!-- Last Page -->
                     <li th:if="${totalPages > 1}">
-                        <a th:href="@{/list/page/{pageNum}(pageNum=${totalPages})}"
+                        <a th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${totalPages})}"
                            th:classappend="${currentPage == totalPages} ? 'active'"
                            class="page"
                            th:text="${totalPages}"></a>
                     </li>
 
                     <li>
-                        <a th:if="${currentPage < totalPages}" th:href="@{/list/page/{pageNum}(pageNum=${currentPage + 1})}" class="button">Next</a>
-                        <span th:if="${currentPage == totalPages}" class="button disabled">Next</span>
+                        <a th:if="${currentPage < totalPages}"
+                           th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${currentPage + 1})}"
+                           class="button">Next</a>
+                        <span th:if="${currentPage >= totalPages}" class="button disabled">Next</span>
                     </li>
                 </ul>
             </div>

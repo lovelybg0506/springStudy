@@ -23,8 +23,9 @@
                 <header class="major">
                     <div style="display:flex; justify-content: space-between; align-items: center;">
                         <h2>Product List</h2>
-                        <form method="post" action="/search">
-                            <input type="text" name="query" id="query" placeholder="Search" style="display: inline-block"/>
+                        <form method="post" action="/search" style="display:flex;">
+                            <input type="text" name="searchText" placeholder="ex) Black" style="display: inline-block"/>
+                            <button style="margin-left: 10px;" class="button primary icon solid fa-search">search</button>
                         </form>
                     </div>
                 </header>

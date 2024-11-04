@@ -333,3 +333,18 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 [하다가 알게된 것]
 302 리다이렉션 처리:
 서버에서 302 상태 코드를 반환하면, 브라우저가 자동으로 리다이렉션을 처리하여 .then 블록이 실행되지 않을 수 있다
+
+[index처리]
+@Table  어노테이션
+
+(쿼리작성시 EXPLAIN 사용하면 index 쓰는지 안쓰는지 확인가능)
+ex : explain select * from item where title like 'black%';
+
+%기호가 앞에 쓰이면 index 동작안함
+-> full text index 사용(영어는 그냥 사용, 한국어는 n-gram parser 이용)
+n-gram parser : 문자를 n자씩 추출해서 full text index 생성
+
+[postgres는 fulltextindex 쓸 때 pg_bigm 사용]
+근데 설치가 잘 안돼서 직접 github에서 zip파일 받아서 폴더 경로에 넣음
+(https://khjeong0423.tistory.com/18) 이사람 블로그 참고함
+

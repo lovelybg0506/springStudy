@@ -9,6 +9,7 @@ import lombok.ToString;
 @Entity
 @ToString // toString 함수 사용가능
 @Getter @Setter
+@Table(indexes = @Index(columnList = "title", name = "itemIdx"))
 public class Item {
 
     // 상품 id
@@ -24,6 +25,7 @@ public class Item {
     private Integer price;  // column용 변수에서는 int 대신 Integer 사용
 
     // 상품설명
+    @Column(length = 3999)
     private String description;
 
     // 등록자

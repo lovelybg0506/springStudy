@@ -161,4 +161,15 @@ public class ItemController {
         return result;
     }
 
+    @PostMapping("/search")
+    String postSearch(@RequestParam String searchText){
+
+        var result = itemRepository.rawQuery1();
+        System.out.println(result);
+
+        return "redirect:/list";
+    }
+
+
+
 }

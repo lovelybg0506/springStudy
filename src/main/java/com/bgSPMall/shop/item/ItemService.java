@@ -24,7 +24,7 @@ public class ItemService {
 
         if (description == null || description.isEmpty()) {
             throw new IllegalArgumentException("상세설명을 입력해주세요.");
-        } else if (description.length() > 255) {
+        } else if (description.length() > 3999) {
             throw new IllegalArgumentException("상세설명 글자 수 제한 3999.");
         }
 

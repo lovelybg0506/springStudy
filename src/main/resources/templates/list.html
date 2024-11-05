@@ -23,7 +23,7 @@
                 <header class="major">
                     <div style="display:flex; justify-content: space-between; align-items: center;">
                         <h2>Product List</h2>
-                        <form method="post" action="/search" style="display:flex;">
+                        <form method="get" action="/search/page/1" style="display:flex;">
                             <input type="text" name="searchText" placeholder="ex) Black" style="display: inline-block"/>
                             <button style="margin-left: 10px;" class="button primary icon solid fa-search">search</button>
                         </form>
@@ -50,15 +50,18 @@
             <div>
                 <ul class="pagination" align="center">
                     <li>
+<!--                        <a th:if="${currentPage > 1}"-->
+<!--                           th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${currentPage - 1})}"-->
+<!--                           class="button">Prev</a>-->
                         <a th:if="${currentPage > 1}"
-                           th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${currentPage - 1})}"
+                           th:href="@{${searchText != null ? '/search/page/' : '/list/page/'} + ${currentPage - 1}(searchText=${searchText})}"
                            class="button">Prev</a>
                         <span th:if="${currentPage == 1}" class="button disabled">Prev</span>
                     </li>
 
                     <!-- First Page -->
                     <li th:if="${totalPages > 0}">
-                        <a th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=1)}"
+                        <a th:href="@{${searchText != null ? '/search/page/1' : '/list/page/1'}(searchText=${searchText})}"
                            th:classappend="${currentPage == 1} ? 'active'" class="page">1</a>
                     </li>
 
@@ -83,15 +86,22 @@
 
                     <!-- Last Page -->
                     <li th:if="${totalPages > 1}">
-                        <a th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${totalPages})}"
+<!--                        <a th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${totalPages})}"-->
+<!--                           th:classappend="${currentPage == totalPages} ? 'active'"-->
+<!--                           class="page"-->
+<!--                           th:text="${totalPages}"></a>-->
+                        <a th:href="@{${searchText != null ? '/search/page/' : '/list/page/'} + ${totalPages}(searchText=${searchText})}"
                            th:classappend="${currentPage == totalPages} ? 'active'"
                            class="page"
                            th:text="${totalPages}"></a>
                     </li>
 
                     <li>
+<!--                        <a th:if="${currentPage < totalPages}"-->
+<!--                           th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${currentPage + 1})}"-->
+<!--                           class="button">Next</a>-->
                         <a th:if="${currentPage < totalPages}"
-                           th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${currentPage + 1})}"
+                           th:href="@{${searchText != null ? '/search/page/' : '/list/page/'} + ${currentPage + 1}(searchText=${searchText})}"
                            class="button">Next</a>
                         <span th:if="${currentPage >= totalPages}" class="button disabled">Next</span>
                     </li>

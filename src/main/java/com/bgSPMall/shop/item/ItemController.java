@@ -175,15 +175,23 @@ public class ItemController {
 //        return "list.html";
 //    }
 
-    @PostMapping("/search")
-    public String postSearch(@RequestParam String searchText, Model model) {
-        return searchWithPagination(searchText, 1, model);  // 첫 페이지로 리다이렉트
-    }
+//    @PostMapping("/search/page/{pageNum}")
+//    public String postSearch(@RequestParam String searchText, @PathVariable(required = false) Integer pageNum, Model model) {
+//
+//        if (pageNum == null)
+//            pageNum = 1;
+//
+//        return searchWithPagination(searchText, pageNum, model);
+//    }
 
-    @GetMapping({"/search"})
+    @GetMapping({"/search/page/{pageNum}"})
     public String searchWithPagination(@RequestParam String searchText,
-                                       @RequestParam(defaultValue = "1") int pageNum,
+                                       @PathVariable(required = false) Integer pageNum,
                                        Model model) {
+
+        if (pageNum == null)
+            pageNum = 1;
+
         int pageSize = 4;  // 페이지당 아이템 수
         Page<Item> result = itemRepository.fullTextSearchWithPagination(searchText,PageRequest.of(pageNum-1, pageSize));
 

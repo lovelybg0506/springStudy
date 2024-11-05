@@ -1,5 +1,6 @@
 package com.bgSPMall.shop;
 
+import com.bgSPMall.shop.Member.JwtFilter;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
@@ -49,6 +51,8 @@ public class SecurityConfig {
         http.sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
+
+        http.addFilterBefore(new JwtFilter(), ExceptionTranslationFilter.class); // (내가만든 필터 실행할 위치 커스터마이징 가능)
 
         http.authorizeHttpRequests((authorize) ->
                 authorize.requestMatchers("/**").permitAll() // 특정페이지 로그인 검사 할지 결정 (permitall : 항상허용)

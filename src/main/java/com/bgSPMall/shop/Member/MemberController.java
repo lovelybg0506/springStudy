@@ -1,5 +1,10 @@
 package com.bgSPMall.shop.Member;
 
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -106,14 +111,35 @@ public class MemberController {
 
     @PostMapping("/login/jwt")
     @ResponseBody
-    public String loginJWT(@RequestBody Map<String, String> data) {
+    public String loginJWT(@RequestBody Map<String, String> data,
+                           HttpServletResponse response) {
 
         var authToken = new UsernamePasswordAuthenticationToken(data.get("username"), data.get("password"));
         var auth = authenticationManagerBuilder.getObject().authenticate(authToken);   // JWT도 loadUserByUsername 셋팅 되어있어야 함
         SecurityContextHolder.getContext().setAuthentication(auth);
-        SecurityContextHolder.getContext().getAuthentication(); // auth변수
+        //SecurityContextHolder.getContext().getAuthentication(); // auth변수
 
-        return "";
+        var jwt = JwtUtil.createToken(SecurityContextHolder.getContext().getAuthentication()); // 계산기용, 변환기용 함수에만 static을 붙이는게 좋음 (재활용하는거라)
+        System.out.println(jwt);
+
+        var cookie = new Cookie("jwt", jwt); // cookie는 문자만 저장 가능
+        cookie.setMaxAge(10); // 초단위의 유효기간 (JWT 유효기간이랑 비슷하거나 같게)
+        cookie.setHttpOnly(true); // 쿠키를 자바스크립트로 조작하기 어려워짐
+        cookie.setPath("/"); // 쿠키가 전송될 URL : '/'는 모든 url
+
+        response.addCookie(cookie);
+
+        return jwt;
+    }
+
+    @GetMapping("my-page/jwt")
+    @ResponseBody
+    String myPageJWT(HttpServletRequest request) {
+
+
+
+
+        return "mypagedata";
     }
 }
 

@@ -46,6 +46,7 @@
           </div>
         </form>
 -->
+        <!-- JWT로그인 -->
         <form>
           <div class="row gtr-uniform">
             <div class="col-6">
@@ -63,6 +64,7 @@
         <div class="col-12">
           <ul class="actions">
             <li><input type="submit" value="Login" class="primary" onclick="loginJWT()" /></li>
+            <button onclick="getMyPage()">JWT 마이페이지</button>
           </ul>
         </div>
 
@@ -92,8 +94,17 @@
         username : document.querySelector('#username').value,
         password : document.querySelector('#password').value
       })
-    }).then(r => r.text()).then((r)=>{ console.log(r) })
+    }).then(r => r.text()).then((r)=>{ console.log(r) }) // https://jwt.io 에서 확인가능
   }
+</script>
+
+<script>
+  function getMyPage(){
+    fetch('/my-page/jwt')
+            .then(()=> r.text())
+            .then(()=> { console.log(r) })
+  }
+
 </script>
 
 </body>

@@ -4,10 +4,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
@@ -18,11 +20,15 @@ public class JwtUtil {
             ));
 
     // JWT 만들어주는 함수
-    public static String createToken() {
+    public static String createToken(Authentication auth) {
+
+        var user = (CustomUser) auth.getPrincipal();
+        var authorities = auth.getAuthorities().stream().map(a -> a.getAuthority()).collect(Collectors.joining(","));
 
         String jwt = Jwts.builder()
-                .claim("username", "유저아이디")
-                .claim("displayName", "유저이름")
+                .claim("username", user.id)
+                .claim("displayName", user.getUsername())
+                .claim("authorities", authorities)
                 .issuedAt(new Date(System.currentTimeMillis())) // 언제 발행했는지
                 .expiration(new Date(System.currentTimeMillis() + 10000)) //유효기간 10초(ms단위)
                 .signWith(key)

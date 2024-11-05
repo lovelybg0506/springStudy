@@ -2,14 +2,21 @@ package com.bgSPMall.shop.Member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,6 +24,7 @@ public class MemberController {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     // 회원가입 화면 이동
     @GetMapping("/register")
@@ -94,6 +102,18 @@ public class MemberController {
         var data = new MemberDto(result.getUserId(), result.getUserName());
 
         return data;
+    }
+
+    @PostMapping("/login/jwt")
+    @ResponseBody
+    public String loginJWT(@RequestBody Map<String, String> data) {
+
+        var authToken = new UsernamePasswordAuthenticationToken(data.get("username"), data.get("password"));
+        var auth = authenticationManagerBuilder.getObject().authenticate(authToken);   // JWT도 loadUserByUsername 셋팅 되어있어야 함
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        SecurityContextHolder.getContext().getAuthentication(); // auth변수
+
+        return "";
     }
 }
 

@@ -13,10 +13,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     Page<Item> findPageBy(Pageable page);
     List<Item> findAllByTitleContains(String title);
 
-//    @Query(value =  "select * from item where title like ?1", nativeQuery = true)
-//    Item rawQuery1(String searchText);
-
-
     @Query(value = "SELECT * FROM item WHERE to_tsvector('english', title) @@ to_tsquery('english', ?1)", nativeQuery = true)
     List<Item> fullTextSearch(String searchText);
 

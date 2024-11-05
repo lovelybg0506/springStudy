@@ -50,9 +50,6 @@
             <div>
                 <ul class="pagination" align="center">
                     <li>
-<!--                        <a th:if="${currentPage > 1}"-->
-<!--                           th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${currentPage - 1})}"-->
-<!--                           class="button">Prev</a>-->
                         <a th:if="${currentPage > 1}"
                            th:href="@{${searchText != null ? '/search/page/' : '/list/page/'} + ${currentPage - 1}(searchText=${searchText})}"
                            class="button">Prev</a>
@@ -86,10 +83,6 @@
 
                     <!-- Last Page -->
                     <li th:if="${totalPages > 1}">
-<!--                        <a th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${totalPages})}"-->
-<!--                           th:classappend="${currentPage == totalPages} ? 'active'"-->
-<!--                           class="page"-->
-<!--                           th:text="${totalPages}"></a>-->
                         <a th:href="@{${searchText != null ? '/search/page/' : '/list/page/'} + ${totalPages}(searchText=${searchText})}"
                            th:classappend="${currentPage == totalPages} ? 'active'"
                            class="page"
@@ -97,9 +90,6 @@
                     </li>
 
                     <li>
-<!--                        <a th:if="${currentPage < totalPages}"-->
-<!--                           th:href="@{${searchText != null ? '/search' : '/list'}(searchText=${searchText},pageNum=${currentPage + 1})}"-->
-<!--                           class="button">Next</a>-->
                         <a th:if="${currentPage < totalPages}"
                            th:href="@{${searchText != null ? '/search/page/' : '/list/page/'} + ${currentPage + 1}(searchText=${searchText})}"
                            class="button">Next</a>

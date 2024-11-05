@@ -28,6 +28,19 @@
                 <h2 th:text="${'￦ ' + detailData.price}">가격</h2>
                 <p th:text="${detailData.description}">상품상세</p>
 
+                <form id="orderForm" action="/order" method="post" onsubmit="return validateForm()">
+                    <input name="title" th:value="${detailData.title}" hidden>
+                    <input name="price" th:value="${detailData.price}" hidden>
+                    <div class="row gtr-uniform">
+                        <div class="col-2 col-12-xsmall">
+                            <input type="text" id="count" name="count" placeholder="count" maxlength="2">
+                        </div>
+                        <div class="col-10 col-12-xsmall">
+                            <button class="primary">Order</button>
+                        </div>
+                    </div>
+                </form>
+
             </section>
 
             <!-- Comments Section -->
@@ -89,6 +102,50 @@
         } else {
             // 로그인 상태라면 폼을 제출
             this.submit();
+        }
+    });
+
+    function validateForm() {
+        var count = document.getElementById("count").value;
+        if (count.trim() === "") {
+            alert("Please  enter the count.");
+            return false;
+        }
+        if (isNaN(count) || parseInt(count) <= 0) {
+            alert("Please enter a valid positive number for count.");
+            return false;
+        }
+        return true;
+    }
+
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        var isLoggedIn = /*[[${#authorization.expression('isAuthenticated()')}]]*/ false;
+
+        if (!isLoggedIn) {
+            if(confirm('주문하려면 로그인이 필요합니다. 로그인 하시겠습니까?')){
+                window.location.href = '/login';
+            }
+        } else {
+            // 로그인 상태라면 폼을 제출
+            this.submit();
+        }
+
+        if (validateForm()) {
+            fetch(this.action, {
+                method : 'POST',
+                body : new FormData(this),
+                headers : {
+                    'X-Requested-With' : 'XMLHttpRequest'
+                }
+            })
+                .then(response => {
+                    if (response.ok || response.status === 302 || response.status === 0) {
+                        alert("Order completed successfully!");
+                    } else {
+                        alert("Order failed. Please try again.");
+                    }
+                });
         }
     });
 </script>

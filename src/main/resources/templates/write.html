@@ -118,50 +118,6 @@
         });
     });
 
-    /*
-    async function getURL(e) {
-        // e.files[0] // 유저가 선택한 파일
-
-        let name = encodeURIComponent(e.files[0].name) // 인코딩
-        let result = await fetch('/presigned-url?filename=' + name)
-        result = await result.text()
-
-        // 유저는 위에서 나온 url로 이미지를 넣어서 S3에 PUT요청
-        let result2 = fetch(result, {
-            method : 'PUT',
-            body : e.files[0] // 업로드한 이미지
-        })
-
-        // console.log('----------------------1');
-        // console.log('result2.url : ' + (await result2).url);
-        // console.log('split : ' + (await result2).url.split("?")[0]); // ?뒤에 떼기
-        // console.log('result2.status : ' + (await result2).status);
-        // console.log('result2.status : ' + (await result2).ok);
-        // console.log('----------------------2');
-
-        let uploadUrl = (await result2).url.split("?")[0];
-        let ok = (await result2).ok;
-
-        // img업로드 성공시 이미지 미리보기
-        if (ok && typeof result2 === 'object') {
-
-            if (ok && uploadUrl) {
-                const imageUrl = uploadUrl;
-                const imgElement = document.getElementById('dynamicImage');
-                if (imgElement) {
-                    imgElement.src = imageUrl;
-                    imgElement.style.display = 'block';
-                } else {
-                    console.warn('Image element not found');
-                }
-            } else {
-                console.warn('result2 does not have expected properties', result2);
-            }
-        } else {
-            console.error('Invalid result2 object', result2);
-        }
-    }*/
-
     // input칸에 파일명 넣기
     $("#file").on('change', function(){
         var fileName = $(this).val().split('\\').pop();

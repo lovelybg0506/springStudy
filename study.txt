@@ -348,3 +348,16 @@ n-gram parser : 문자를 n자씩 추출해서 full text index 생성
 근데 설치가 잘 안돼서 직접 github에서 zip파일 받아서 폴더 경로에 넣음
 (https://khjeong0423.tistory.com/18) 이사람 블로그 참고함
 
+[ManyToOne] 쓰는것 보단 그냥 직접 짜는게 나은듯
+join 사용시엔 JPQL
+JPQL : SQL 대용 문법
+
+manyToOne 쓰면 모든컬럼(비밀번호)을 다 가져와서 보안상 좋지않음
+
+1.마이페이지에 주문내역
+2.admin이면 모든 주문내역 보이게
+
+[JWT]
+implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+implementation 'io.jsonwebtoken:jjwt-gson:0.12.5'
+implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'

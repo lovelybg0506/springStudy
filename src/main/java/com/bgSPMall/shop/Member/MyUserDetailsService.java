@@ -45,6 +45,7 @@ public class MyUserDetailsService implements UserDetailsService {
         // MemberController.java 의 myPage 함수의 파라미터로 전달되는 값 == userInfo
         var userInfo =  new CustomUser(user.getUserId(), user.getUserPwd(), authorities);
         userInfo.userName = user.getUserName();
+        userInfo.id = user.getId(); // primary key Id값
         return userInfo;
     }
 

@@ -25,8 +25,8 @@
         <div th:if="${param.error}"> <!-- url 파라미터중 error가 있으면 보여줌 -->
           <h4>로그인 실패</h4>
         </div>
-
-        <form method="post" action="/login"> <!-- MyUserDetailsService.java로 감 -->
+<!--
+        <form method="post" action="/login"> &lt;!&ndash; MyUserDetailsService.java로 감 &ndash;&gt;
           <div class="row gtr-uniform">
             <div class="col-6">
               <input type="text" name="username" placeholder="ID" />
@@ -45,6 +45,26 @@
             </div>
           </div>
         </form>
+-->
+        <form>
+          <div class="row gtr-uniform">
+            <div class="col-6">
+              <input type="text" name="username" id="username" placeholder="ID" />
+            </div>
+            <div class="col-6"></div>
+
+            <div class="col-6">
+              <input type="password" name="password" id="password" placeholder="PASSWORD" />
+            </div>
+            <div class="col-6"></div>
+          </div>
+        </form>
+
+        <div class="col-12">
+          <ul class="actions">
+            <li><input type="submit" value="Login" class="primary" onclick="loginJWT()" /></li>
+          </ul>
+        </div>
 
       </section>
 
@@ -62,6 +82,19 @@
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
+
+<script>
+  function loginJWT(){
+    fetch('/login/jwt', {
+      method : 'POST',
+      headers : {'Content-Type': 'application/json'},
+      body : JSON.stringify({
+        username : document.querySelector('#username').value,
+        password : document.querySelector('#password').value
+      })
+    }).then(r => r.text()).then((r)=>{ console.log(r) })
+  }
+</script>
 
 </body>
 </html>

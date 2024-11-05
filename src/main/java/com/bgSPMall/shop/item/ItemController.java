@@ -161,29 +161,7 @@ public class ItemController {
         return result;
     }
 
-//    @PostMapping("/search")
-//    String postSearch(@RequestParam String searchText, Model model){
-//
-//        List<Item> result = itemRepository.fullTextSearch(searchText);
-//        System.out.println(result);
-//
-//        model.addAttribute("items", result);
-////        model.addAttribute("totalPages", totalPages);
-////        model.addAttribute("currentPage", pageNum);
-//
-//
-//        return "list.html";
-//    }
-
-//    @PostMapping("/search/page/{pageNum}")
-//    public String postSearch(@RequestParam String searchText, @PathVariable(required = false) Integer pageNum, Model model) {
-//
-//        if (pageNum == null)
-//            pageNum = 1;
-//
-//        return searchWithPagination(searchText, pageNum, model);
-//    }
-
+    // 검색어 있을경우
     @GetMapping({"/search/page/{pageNum}"})
     public String searchWithPagination(@RequestParam String searchText,
                                        @PathVariable(required = false) Integer pageNum,

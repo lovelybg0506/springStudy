@@ -46,6 +46,7 @@ public class JwtFilter extends OncePerRequestFilter { // OncePerRequestFilter = 
         try{
             claim = JwtUtil.extractToken(jwtCookie);    // 3.jwt값이 정상이면,
         } catch (Exception e){
+            System.out.println("유효기간이 만료되거나 문제가 있음.");
             filterChain.doFilter(request, response);
             return;
         }
@@ -55,19 +56,15 @@ public class JwtFilter extends OncePerRequestFilter { // OncePerRequestFilter = 
         var arr = claim.get("authorities").toString().split(","); // split : ,콤마 로 구분해서 나열
         var authorities = Arrays.stream(arr).map(a -> new SimpleGrantedAuthority(a)).toList(); // array안의 자료를 simple~ 로 변환
 
-        var customUser = new CustomUser(
-                claim.get("username").toString(), // JWT 안에있는 username
-                "none",
-                authorities
-        );
+        var customUser = new CustomUser(claim.get("username").toString(),"none",authorities);
         customUser.userName = claim.get("displayName").toString();
 
         var authToken = new UsernamePasswordAuthenticationToken(
-                claim.get("username").toString(), ""    // claim.get("username").toString() <- principal
+                customUser,    // claim.get("username").toString() <- principal
+                null
         );
-        authToken.setDetails(new WebAuthenticationDetailsSource()
-                .buildDetails(request) // auth변수에 details부분
-        );
+
+        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)); // auth변수에 details부분
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
 

@@ -1,0 +1,1 @@
+application.properties는 gitignore

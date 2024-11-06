@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -134,10 +135,13 @@ public class MemberController {
 
     @GetMapping("my-page/jwt")
     @ResponseBody
-    String myPageJWT(HttpServletRequest request) {
+    String myPageJWT(Authentication auth) {
 
-
-
+        var user = (CustomUser)auth.getPrincipal();
+        System.out.println("user:"+user);
+        System.out.println("user.userName:"+user.userName);
+        System.out.println("user.id:"+user.id);
+        System.out.println("user.getAuthorities:"+user.getAuthorities());
 
         return "mypagedata";
     }
